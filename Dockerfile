@@ -12,7 +12,7 @@ RUN npm install
 COPY . .
 
 # Expose app port
-EXPOSE 8000
+EXPOSE 8001
 
 # Start the app
 CMD ["npm", "start"]
