@@ -77,6 +77,6 @@ jobs:
           instance-ids: ${{ secrets.INSTANCE_ID }}
           working-directory: /home/ubuntu
           command: |
-           cd /home/ubuntu/hrms
+           cd /home/ubuntu/node-app
            bash deploy.sh
-          comment: Create example.txt file via AWS SSM
+          
