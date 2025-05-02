@@ -32,9 +32,9 @@ This document outlines the steps I followed to set up a system monitoring stack 
    * Configured a Prometheus data source in Grafana, pointing to the Prometheus service.
    * Verified the connection between Grafana and Prometheus.
 
-6. **Importing Prebuilt Grafana Dashboard**
+6. **Created Grafana Dashboard**
 
-   * Imported a community-provided Grafana dashboard using its ID (e.g., for Node Exporter metrics).
+   * Created a Grafana dashboard.
    * Mapped it to the Prometheus data source and verified the charts displayed correctly.
 
 ---
@@ -112,7 +112,5 @@ I set up **Grafana alerts** to send notifications via email when critical system
 * System Uptime
 
 ---
-
-### 🔔 Alerting Benefits
 
 Grafana and Prometheus can also give insight into applications like Django.
