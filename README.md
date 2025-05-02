@@ -174,7 +174,7 @@ After successfully building and pushing the image, this job deploys the image to
        payload: |
          {
            "text": "✅ *Deployment Successful!* Your Node.js app is now live on EC2.",
-           "channel": "#your-channel-name"
+           "channel": "#slack-s14"
          }
      env:
        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -212,7 +212,6 @@ After successfully building and pushing the image, this job deploys the image to
 If I had more time, I would have implemented additional security checks within the pipeline to ensure that the code and images are free from vulnerabilities. Some improvements could include:
 
 * **Code Scanning and Vulnerability Detection:** I would integrate security tools like **Snyk** or **OWASP Dependency-Check** to scan the application code and dependencies for vulnerabilities before building the Docker image.
-* **Docker Image Scanning:** I would add a step in the pipeline to scan the Docker image using tools like **Trivy** to check for vulnerabilities in the container layers.
 * **Static Analysis:** Integrating a static code analysis tool (like **SonarQube**) could help catch security issues and maintain high code quality before the deployment process.
 
 ---
