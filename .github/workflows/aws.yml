@@ -1,14 +1,16 @@
-name: DEPLOY TO ECR
+name: Deploy Node.js App to EC2 via ECR
+
 on:
   push:
     branches: [main]
+
 jobs:
-  build:
-    name: Build Image
+  deploy_pipeline:
+    name: CI/CD Pipeline
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check out code
+      - name:  Check out source code
         uses: actions/checkout@v2
 
       - name: Configure AWS credentials
@@ -18,27 +20,32 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-central-1
 
-      - name: Login to Amazon ECR
+      - name:  Log in to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
 
-      - name: Build, tag, and push image to Amazon ECR
+      - name:  Build Docker image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: node-app
           IMAGE_TAG: latest
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+
+      - name:  Scan Docker image for vulnerabilities
+        uses: crazy-max/ghaction-container-scan@v2
+        with:
+          image: ${{ steps.login-ecr.outputs.registry }}/node-app:latest
+
+      - name: 🐳 Push Docker image to ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          ECR_REPOSITORY: node-app
+          IMAGE_TAG: latest
+        run: |
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-   
-           
-  Deploy:
-    name: DEPLOY TO EC2
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: AWS SSM STEP
+      - name:  Deploy to EC2 via AWS SSM
         uses: peterkimzz/aws-ssm-send-command@v1.1.1
         id: ssm
         with:
@@ -48,6 +55,16 @@ jobs:
           instance-ids: ${{ secrets.INSTANCE_ID }}
           working-directory: /home/ubuntu
           command: |
-           cd /home/ubuntu/node-app
-           bash deploy.sh
-          
+            cd /home/ubuntu/node-app
+            bash deploy.sh
+
+      - name: Send Slack notification on success
+        uses: slackapi/slack-github-action@v1.24.0
+        with:
+          payload: |
+            {
+              "text": " *Deployment Successful!* Your Node.js app is now live on EC2.",
+              "channel": "#your-channel-name"
+            }
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
