@@ -1,7 +1,3 @@
-Apologies for missing the Docker image scan before the push! Here's the updated version of the README, including the **scan step before pushing the Docker image** to ECR.
-
----
-
 ### Overview
 
 In this project, I set up a CI/CD pipeline using **GitHub Actions** to automatically build and push a Docker image of a Node.js application to **Amazon ECR**, and then deploy it to an **EC2 instance** using **AWS SSM (Systems Manager)**.
@@ -215,5 +211,3 @@ If I had more time, I would have implemented additional security checks within t
 * **Static Analysis:** Integrating a static code analysis tool (like **SonarQube**) could help catch security issues and maintain high code quality before the deployment process.
 
 ---
-
-Now, the **Docker image scanning** before the push is correctly included in the pipeline, and all relevant details are reflected in the README. Let me know if you'd like any further adjustments!
