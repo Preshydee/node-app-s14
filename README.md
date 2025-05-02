@@ -1,4 +1,4 @@
-### 👨‍💻 Overview
+### Overview
 
 In this project, I set up a CI/CD pipeline using **GitHub Actions** to automatically build and push a Docker image of a Node.js application to **Amazon ECR**, and then deploy it to an **EC2 instance** using **AWS SSM (Systems Manager)**.
 
@@ -103,7 +103,7 @@ jobs:
 
 ---
 
-#### 🚀 Job 2: `Deploy to EC2`
+####  Job 2: `Deploy to EC2`
 
 After successfully building and pushing the image, this job deploys the image to an EC2 instance.
 
@@ -138,7 +138,7 @@ After successfully building and pushing the image, this job deploys the image to
 
 ---
 
-### 📜 Summary
+###  Summary
 
 * ✅ Manually tested the Node.js app and Docker setup
 * ✅ Created an EC2 instance and an ECR repository
@@ -150,8 +150,20 @@ After successfully building and pushing the image, this job deploys the image to
 
 ---
 
-### 🛡️ Security Notes
+### Security Notes
 
 * All sensitive data (AWS credentials, EC2 instance ID) are securely stored as GitHub Actions **secrets**.
 * No SSH keys are exposed; **AWS SSM** handles remote command execution securely.
 
+
+Future Security Enhancements
+If I had more time, I would have implemented additional security checks within the pipeline to ensure that the code and images are free from vulnerabilities. Some improvements could include:
+
+Code Scanning and Vulnerability Detection:
+I would integrate security tools like Snyk or OWASP Dependency-Check to scan the application code and dependencies for vulnerabilities before building the Docker image.
+
+Docker Image Scanning:
+I would add a step in the pipeline to scan the Docker image using tools like Trivy to check for vulnerabilities in the container layers.
+
+Static Analysis:
+Integrating a static code analysis tool (like SonarQube) could help catch security issues and maintain high code quality before the deployment process.
