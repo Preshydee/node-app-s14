@@ -37,7 +37,7 @@ jobs:
         with:
           image: ${{ steps.login-ecr.outputs.registry }}/node-app:latest
 
-      - name: 🐳 Push Docker image to ECR
+      - name: Push Docker image to ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
           ECR_REPOSITORY: node-app
